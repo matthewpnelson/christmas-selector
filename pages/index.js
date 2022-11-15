@@ -9,16 +9,19 @@ function splitUserData(userData) {
   let nameList = [];
   let oneAgoList = [];
   let twoAgoList = [];
+  let partnerList = [];
   for (let i = 0; i < userData.length; i++) {
     nameList.push(userData[i].name);
     oneAgoList.push(userData[i].oneAgo);
     twoAgoList.push(userData[i].twoAgo);
+    partnerList.push(userData[i].partner);
   }
-  return [nameList, oneAgoList, twoAgoList];
+  return [nameList, oneAgoList, twoAgoList, partnerList];
 }
 
 export default function Home({ userData }) {
-  const [nameList, oneAgoList, twoAgoList] = splitUserData(userData);
+  const [nameList, oneAgoList, twoAgoList, partnerList] =
+    splitUserData(userData);
 
   // define a react state for the random seed
   const [randomSeed, setRandomSeed] = useState(0);
@@ -39,6 +42,7 @@ export default function Home({ userData }) {
 
   // update the random seed with the updateNumberwhen a button is pressed
   const updateRandomSeedWithNumber = () => {
+    console.log(number);
     setRandomSeed(number);
   };
 
@@ -48,8 +52,9 @@ export default function Home({ userData }) {
   const randomSelect = (list, seed) => {
     // create a new random number generator using the seed
     // convert seed to string to avoid errors
-    const rng = seedrandom(seed);
-    // const rng = seedrandom(seed);
+    // const rng = seedrandom(randomSeed.toString());
+    const rng = seedrandom(seed.toString());
+    console.log(seed);
     // create a copy of the list
     let listCopy = [...list];
     // create a new list to hold the results
@@ -67,17 +72,18 @@ export default function Home({ userData }) {
     return results;
   };
 
-  // define a function to check if each item in one list matches the item at the same index of any of three other lists
+  // define a function to check if each item in one list matches the item at the same index of any of four other lists
   // returns true if there is a match, false if there is not
   // takes a list, and three other lists as input
-  const checkForMatch = (list, list1, list2, list3) => {
+  const checkForMatch = (list, list1, list2, list3, list4) => {
     // loop through the list
     for (let i = 0; i < list.length; i++) {
       // check if the item at the current index matches the item at the same index in any of the other lists
       if (
         list[i] === list1[i] ||
         list[i] === list2[i] ||
-        list[i] === list3[i]
+        list[i] === list3[i] ||
+        list[i] === list4[i]
       ) {
         // if there is a match, return true
         return true;
@@ -91,18 +97,18 @@ export default function Home({ userData }) {
   useEffect(() => {
     if (randomSeed !== 0) {
       const results = randomSelect(nameList, randomSeed);
-
       setRandomNames(results);
     }
   }, [randomSeed]);
 
   // useEffect to check if the random selection has a match when randomNames changes, and update the random seed if there is a match
   useEffect(() => {
-    if (checkForMatch(randomNames, nameList, oneAgoList, twoAgoList)) {
+    if (
+      checkForMatch(randomNames, nameList, oneAgoList, twoAgoList, partnerList)
+    ) {
       // set random seed using Math.random()
       const newSeed = Math.floor(Math.random() * 1000000);
       setRandomSeed(newSeed);
-      // setRandomSeed(randomSeed + 1);
       setNumber(newSeed);
     }
   }, [randomNames]);
@@ -119,56 +125,6 @@ export default function Home({ userData }) {
         <h1 className={styles.title}>
           Nelson Holiday <a href="#">Buying Guide</a>
         </h1>
-
-        <div className={styles.grid}>
-          {/* Show userData in a table */}
-          {/* <div className={styles.card}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th className={styles.th}>Name</th>
-                  <th className={styles.th}>One Year Ago</th>
-                  <th className={styles.th}>Two Years Ago</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userData &&
-                  userData.map((user) => (
-                    <tr key={user.name}>
-                      <td>{user.name}</td>
-                      <td>{user.oneAgo}</td>
-                      <td>{user.twoAgo}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div> */}
-
-          {/* <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </div> */}
-
-          {/* 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a> */}
-        </div>
 
         <p className={styles.description}>
           <code className={styles.code}>
@@ -187,6 +143,7 @@ export default function Home({ userData }) {
                   <th className={styles.th}>Buys For</th>
                   <th className={styles.th}>2021 Check</th>
                   <th className={styles.th}>2020 Check</th>
+                  <th className={styles.th}>Partner Check</th>
                   <th className={styles.th}>Self Check</th>
                 </tr>
               </thead>
@@ -207,8 +164,8 @@ export default function Home({ userData }) {
                           }
                         >
                           {oneAgoList[index] === randomNames[index]
-                            ? "- BUST"
-                            : randomSeed !== 0 && "- ✔︎"}
+                            ? " - 𐄂"
+                            : oneAgoList[index] && randomSeed !== 0 && " - ✔︎"}
                         </span>
                       </td>
                       <td>
@@ -221,11 +178,25 @@ export default function Home({ userData }) {
                           }
                         >
                           {twoAgoList[index] === randomNames[index]
-                            ? "- BUST"
-                            : randomSeed !== 0 && "- ✔︎"}
+                            ? " - 𐄂"
+                            : twoAgoList[index] && randomSeed !== 0 && " - ✔︎"}
                         </span>
                       </td>
 
+                      <td>
+                        {partnerList[index]}
+                        <span
+                          className={
+                            partnerList[index] === randomNames[index]
+                              ? styles.textMatch
+                              : styles.textNoMatch
+                          }
+                        >
+                          {partnerList[index] === randomNames[index]
+                            ? " - 𐄂"
+                            : partnerList[index] && randomSeed !== 0 && " - ✔︎"}
+                        </span>
+                      </td>
                       <td>
                         {nameList[index]}
                         <span
@@ -236,8 +207,8 @@ export default function Home({ userData }) {
                           }
                         >
                           {nameList[index] === randomNames[index]
-                            ? "- BUST"
-                            : randomSeed !== 0 && "- ✔︎"}
+                            ? " - 𐄂"
+                            : nameList[index] && randomSeed !== 0 && " - ✔︎"}
                         </span>
                       </td>
                     </tr>
