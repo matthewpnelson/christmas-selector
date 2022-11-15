@@ -29,7 +29,7 @@
 }
 
 .title a {
-  color: #0070f3;
+  color: #D6001C;
   text-decoration: none;
 }
 
@@ -63,6 +63,7 @@
   font-size: 1.1rem;
   font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
     Bitstream Vera Sans Mono, Courier New, monospace;
+    color:#458A0E
 }
 
 .grid {
@@ -71,6 +72,54 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+}
+
+.textMatch {
+  color: #D6001C;
+}
+
+.textNoMatch {
+  color: #458A0E;
+}
+
+.button {
+  background-color: #D6001C;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.secondaryButton {
+  background-color: white;
+  border: #D6001C 2px solid;
+  /* color: white; */
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.input {
+  background-color: #fafafa;
+  border: none;
+  border-radius: 5px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
 .card {
@@ -82,14 +131,23 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.table {
+  width: 100%
+}
+
+.th {
+  width: 150px;
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #D6001C;
+  border-color: #D6001C;
 }
 
 .card h2 {
