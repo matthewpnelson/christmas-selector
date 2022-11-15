@@ -213,18 +213,12 @@ export default function Home({ userData }) {
                       </td>
                     </tr>
                   ))}
-
-                {/* {userData &&
-                  chooseRandomUsers(userData).map((user) => (
-                    <tr key={user.name}>
-                      <td>{user[0]}</td>
-                      <td></td>
-                      <td>{user[1]}</td>
-                    </tr>
-                  ))} */}
               </tbody>
             </table>
           </div>
+          <p className={styles.description}>
+            <span className={styles.muted}>Made with ❤️ by Matthew</span>
+          </p>
         </div>
       </main>
 

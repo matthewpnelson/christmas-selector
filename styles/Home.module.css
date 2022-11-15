@@ -82,6 +82,12 @@
   color: #458A0E;
 }
 
+.muted {
+  color: black;
+  font-size: 0.8rem;
+
+}
+
 .button {
   background-color: #D6001C;
   border: none;
