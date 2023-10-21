@@ -9,18 +9,20 @@ function splitUserData(userData) {
   let nameList = [];
   let oneAgoList = [];
   let twoAgoList = [];
+  let threeAgoList = [];
   let partnerList = [];
   for (let i = 0; i < userData.length; i++) {
     nameList.push(userData[i].name);
     oneAgoList.push(userData[i].oneAgo);
     twoAgoList.push(userData[i].twoAgo);
+    threeAgoList.push(userData[i].threeAgo);
     partnerList.push(userData[i].partner);
   }
-  return [nameList, oneAgoList, twoAgoList, partnerList];
+  return [nameList, oneAgoList, twoAgoList, threeAgoList, partnerList];
 }
 
 export default function Home({ userData }) {
-  const [nameList, oneAgoList, twoAgoList, partnerList] =
+  const [nameList, oneAgoList, twoAgoList, threeAgoList, partnerList] =
     splitUserData(userData);
 
   // define a react state for the random seed
@@ -75,7 +77,7 @@ export default function Home({ userData }) {
   // define a function to check if each item in one list matches the item at the same index of any of four other lists
   // returns true if there is a match, false if there is not
   // takes a list, and three other lists as input
-  const checkForMatch = (list, list1, list2, list3, list4) => {
+  const checkForMatch = (list, list1, list2, list3, list4, list5) => {
     // loop through the list
     for (let i = 0; i < list.length; i++) {
       // check if the item at the current index matches the item at the same index in any of the other lists
@@ -83,7 +85,8 @@ export default function Home({ userData }) {
         list[i] === list1[i] ||
         list[i] === list2[i] ||
         list[i] === list3[i] ||
-        list[i] === list4[i]
+        list[i] === list4[i] ||
+        list[i] === list5[i]
       ) {
         // if there is a match, return true
         return true;
@@ -104,7 +107,14 @@ export default function Home({ userData }) {
   // useEffect to check if the random selection has a match when randomNames changes, and update the random seed if there is a match
   useEffect(() => {
     if (
-      checkForMatch(randomNames, nameList, oneAgoList, twoAgoList, partnerList)
+      checkForMatch(
+        randomNames,
+        nameList,
+        oneAgoList,
+        twoAgoList,
+        threeAgoList,
+        partnerList
+      )
     ) {
       // set random seed using Math.random()
       const newSeed = Math.floor(Math.random() * 1000000);
@@ -128,7 +138,7 @@ export default function Home({ userData }) {
 
         <p className={styles.description}>
           <code className={styles.code}>
-            Randomly Generated Gift Recipients for 2022
+            Randomly Generated Gift Recipients for {new Date().getFullYear()}
           </code>
         </p>
 
@@ -141,10 +151,11 @@ export default function Home({ userData }) {
                   <th className={styles.th}>Name</th>
 
                   <th className={styles.th}>Buys For</th>
-                  <th className={styles.th}>2021 Check</th>
-                  <th className={styles.th}>2020 Check</th>
-                  <th className={styles.th}>Partner Check</th>
-                  <th className={styles.th}>Self Check</th>
+                  <th className={styles.th}>{new Date().getFullYear() - 1}</th>
+                  <th className={styles.th}> {new Date().getFullYear() - 2}</th>
+                  <th className={styles.th}> {new Date().getFullYear() - 3}</th>
+                  {/* <th className={styles.th}>Partner Check</th>
+                  <th className={styles.th}>Self Check</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -182,8 +193,23 @@ export default function Home({ userData }) {
                             : twoAgoList[index] && randomSeed !== 0 && " - ✔︎"}
                         </span>
                       </td>
-
                       <td>
+                        {threeAgoList[index]}
+                        <span
+                          className={
+                            threeAgoList[index] === randomNames[index]
+                              ? styles.textMatch
+                              : styles.textNoMatch
+                          }
+                        >
+                          {threeAgoList[index] === randomNames[index]
+                            ? " - 𐄂"
+                            : threeAgoList[index] &&
+                              randomSeed !== 0 &&
+                              " - ✔︎"}
+                        </span>
+                      </td>
+                      {/* <td>
                         {partnerList[index]}
                         <span
                           className={
@@ -210,13 +236,19 @@ export default function Home({ userData }) {
                             ? " - 𐄂"
                             : nameList[index] && randomSeed !== 0 && " - ✔︎"}
                         </span>
-                      </td>
+                      </td> */}
                     </tr>
                   ))}
               </tbody>
             </table>
           </div>
           <p className={styles.description}>
+            <span className={styles.muted}>
+              Randomly chooses a recipient while avoiding puchasing for
+              yourself, your partner, or anyone you bought for in the last 3
+              years.
+            </span>
+            <br />
             <span className={styles.muted}>Made with ❤️ by Matthew</span>
           </p>
         </div>

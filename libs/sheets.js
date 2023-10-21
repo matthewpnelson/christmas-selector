@@ -21,7 +21,8 @@ export async function getNamesData() {
         name: row[0] ? row[0] : null,
         oneAgo: row[1] ? row[1] : null,
         twoAgo: row[2] ? row[2] : null,
-        partner: row[3] ? row[3] : null,
+        threeAgo: row[3] ? row[3] : null,
+        partner: row[4] ? row[4] : null,
       }));
     }
   } catch (err) {
