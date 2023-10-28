@@ -38,16 +38,6 @@ function splitKidsList(kidsData) {
 }
 
 export default function Home({ userData, kidsData }) {
-  const [list, setList] = useState("adults");
-
-  const toggleList = () => {
-    if (list === "adults") {
-      setList("kids");
-    } else {
-      setList("adults");
-    }
-  };
-
   const [nameList, oneAgoList, twoAgoList, threeAgoList, partnerList] =
     splitUserData(userData);
 
@@ -66,6 +56,20 @@ export default function Home({ userData, kidsData }) {
   const [randomKidsNames, setRandomKidsNames] = useState([]);
   // define a react state to hold a number
   const [number, setNumber] = useState(0);
+
+  const [list, setList] = useState("adults");
+
+  const toggleList = () => {
+    if (list === "adults") {
+      setList("kids");
+      setRandomSeed(0);
+      setNumber(0);
+    } else {
+      setList("adults");
+      setRandomSeed(0);
+      setNumber(0);
+    }
+  };
 
   // define a function to update the random seed using an input field
   const updateRandomSeed = (e) => {
@@ -232,8 +236,8 @@ export default function Home({ userData, kidsData }) {
                       {" "}
                       {new Date().getFullYear() - 3}
                     </th>
-                    {/* <th className={styles.th}>Partner Check</th>
-                  <th className={styles.th}>Self Check</th> */}
+                    {/* <th className={styles.th}>P</th>
+                    <th className={styles.th}>S</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -243,7 +247,7 @@ export default function Home({ userData, kidsData }) {
                       <tr key={user.name}>
                         <td>{user.name}</td>
                         <td>{randomNames[index]}</td>
-                        <td>
+                        <td className={styles.textmuted}>
                           {oneAgoList[index]}
                           <span
                             className={
@@ -259,7 +263,7 @@ export default function Home({ userData, kidsData }) {
                                 " - ✔︎"}
                           </span>
                         </td>
-                        <td>
+                        <td className={styles.textmuted}>
                           {twoAgoList[index]}
                           <span
                             className={
@@ -275,7 +279,7 @@ export default function Home({ userData, kidsData }) {
                                 " - ✔︎"}
                           </span>
                         </td>
-                        <td>
+                        <td className={styles.textmuted}>
                           {threeAgoList[index]}
                           <span
                             className={
@@ -291,34 +295,34 @@ export default function Home({ userData, kidsData }) {
                                 " - ✔︎"}
                           </span>
                         </td>
-                        {/* <td>
-                        {partnerList[index]}
-                        <span
-                          className={
-                            partnerList[index] === randomNames[index]
-                              ? styles.textMatch
-                              : styles.textNoMatch
-                          }
-                        >
-                          {partnerList[index] === randomNames[index]
-                            ? " - 𐄂"
-                            : partnerList[index] && randomSeed !== 0 && " - ✔︎"}
-                        </span>
-                      </td>
-                      <td>
-                        {nameList[index]}
-                        <span
-                          className={
-                            nameList[index] === randomNames[index]
-                              ? styles.textMatch
-                              : styles.textNoMatch
-                          }
-                        >
-                          {nameList[index] === randomNames[index]
-                            ? " - 𐄂"
-                            : nameList[index] && randomSeed !== 0 && " - ✔︎"}
-                        </span>
-                      </td> */}
+                        <td className={styles.textmuted}>
+                          {/* {partnerList[index]} */}
+                          <span
+                            className={
+                              partnerList[index] === randomNames[index]
+                                ? styles.textMatch
+                                : styles.textNoMatch
+                            }
+                          >
+                            {partnerList[index] === randomNames[index]
+                              ? "𐄂"
+                              : partnerList[index] && randomSeed !== 0 && "✔︎"}
+                          </span>
+                        </td>
+                        <td className={styles.textmuted}>
+                          {/* {nameList[index]} */}
+                          <span
+                            className={
+                              nameList[index] === randomNames[index]
+                                ? styles.textMatch
+                                : styles.textNoMatch
+                            }
+                          >
+                            {nameList[index] === randomNames[index]
+                              ? "𐄂"
+                              : nameList[index] && randomSeed !== 0 && "✔︎"}
+                          </span>
+                        </td>
                       </tr>
                     ))}
                 </tbody>
@@ -366,7 +370,7 @@ export default function Home({ userData, kidsData }) {
                       <tr key={user.name}>
                         <td>{user.name}</td>
                         <td>{randomKidsNames[index]}</td>
-                        <td>
+                        <td className={styles.textmuted}>
                           {kidsOneAgoList[index]}
                           <span
                             className={
@@ -382,7 +386,7 @@ export default function Home({ userData, kidsData }) {
                                 " - ✔︎"}
                           </span>
                         </td>
-                        <td>
+                        <td className={styles.textmuted}>
                           {kidsTwoAgoList[index]}
                           <span
                             className={
@@ -398,50 +402,57 @@ export default function Home({ userData, kidsData }) {
                                 " - ✔︎"}
                           </span>
                         </td>
-                        {/* <td>
-                          {kidsSiblingOneList[index]}
+                        <td className={styles.textmuted}>
+                          {/* {kidsSiblingOneList[index]} */}
                           <span
                             className={
-                              kidsSiblingOneList[index] === randomNames[index]
+                              kidsSiblingOneList[index] ===
+                              randomKidsNames[index]
                                 ? styles.textMatch
                                 : styles.textNoMatch
                             }
                           >
-                            {kidsSiblingOneList[index] === randomNames[index]
-                              ? " - 𐄂"
+                            {kidsSiblingOneList[index] ===
+                            randomKidsNames[index]
+                              ? "𐄂"
                               : kidsSiblingOneList[index] &&
                                 randomSeed !== 0 &&
-                                " - ✔︎"}
+                                "✔︎"}
                           </span>
-                        </td> */}
-                        {/* <td>
-                        {partnerList[index]}
-                        <span
-                          className={
-                            partnerList[index] === randomNames[index]
-                              ? styles.textMatch
-                              : styles.textNoMatch
-                          }
-                        >
-                          {partnerList[index] === randomNames[index]
-                            ? " - 𐄂"
-                            : partnerList[index] && randomSeed !== 0 && " - ✔︎"}
-                        </span>
-                      </td>
-                      <td>
-                        {nameList[index]}
-                        <span
-                          className={
-                            nameList[index] === randomNames[index]
-                              ? styles.textMatch
-                              : styles.textNoMatch
-                          }
-                        >
-                          {nameList[index] === randomNames[index]
-                            ? " - 𐄂"
-                            : nameList[index] && randomSeed !== 0 && " - ✔︎"}
-                        </span>
-                      </td> */}
+                        </td>
+                        <td className={styles.textmuted}>
+                          {/* {kidsSiblingOneList[index]} */}
+                          <span
+                            className={
+                              kidsSiblingTwoList[index] ===
+                              randomKidsNames[index]
+                                ? styles.textMatch
+                                : styles.textNoMatch
+                            }
+                          >
+                            {kidsSiblingTwoList[index] ===
+                            randomKidsNames[index]
+                              ? "𐄂"
+                              : kidsSiblingTwoList[index] &&
+                                randomSeed !== 0 &&
+                                "✔︎"}
+                          </span>
+                        </td>
+
+                        <td className={styles.textmuted}>
+                          {/* {kidsNameList[index]} */}
+                          <span
+                            className={
+                              kidsNameList[index] === randomKidsNames[index]
+                                ? styles.textMatch
+                                : styles.textNoMatch
+                            }
+                          >
+                            {kidsNameList[index] === randomKidsNames[index]
+                              ? "𐄂"
+                              : kidsNameList[index] && randomSeed !== 0 && "✔︎"}
+                          </span>
+                        </td>
                       </tr>
                     ))}
                 </tbody>

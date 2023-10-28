@@ -82,6 +82,11 @@
   color: #458A0E;
 }
 
+.textmuted {
+  color: gray;
+  font-size: 0.8rem;
+}
+
 .muted {
   color: black;
   font-size: 0.8rem;
