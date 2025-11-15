@@ -173,8 +173,8 @@ export default function Home({ userData, kidsData }) {
         checkForMatch(
           randomKidsNames,
           kidsNameList,
-          kidsOneAgoList,
-          kidsTwoAgoList,
+          [],
+          [],
           kidsSiblingOneList,
           kidsSiblingTwoList
         )
