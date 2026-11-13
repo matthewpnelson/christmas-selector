@@ -52,8 +52,8 @@ export async function getKidsData() {
         name: row[0] ? row[0] : null,
         oneAgo: row[1] ? row[1] : null,
         twoAgo: row[2] ? row[2] : null,
-        siblingOne: row[3] ? row[3] : null,
-        siblingTwo: row[4] ? row[4] : null,
+        // Columns D onward are siblings; add a column for a bigger family.
+        siblings: row.slice(3).filter(Boolean),
       }));
     }
   } catch (err) {

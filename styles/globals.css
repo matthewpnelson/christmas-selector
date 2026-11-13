@@ -1,26 +1,57 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+:root {
+  --bg: #fbf9f6;
+  --surface: #ffffff;
+  --text: #1c1917;
+  --muted: #6b6560;
+  --line: #e7e2dc;
+  --red: #c8001a;
+  --red-hover: #a80016;
+  --on-red: #ffffff;
+  --green: #3d7a0c;
+  --field: #f3efea;
+  --focus: #c8001a;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14110f;
+    --surface: #1d1a17;
+    --text: #f2eee9;
+    --muted: #a39b93;
+    --line: #34302b;
+    --red: #ff4a5c;
+    --red-hover: #ff6b7a;
+    --on-red: #1a0003;
+    --green: #8fd14f;
+    --field: #27231f;
+    --focus: #ff4a5c;
+  }
+  html {
+    color-scheme: dark;
+  }
 }
 
 * {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--red);
+  color: var(--on-red);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
