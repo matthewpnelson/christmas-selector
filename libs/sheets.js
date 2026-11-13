@@ -48,12 +48,16 @@ export async function getKidsData() {
 
     const rows = response.data.values;
     if (rows.length) {
+      // Sibling columns are any whose header starts with "Sibling".
+      // Add "Sibling Three" for a bigger family; notes in other columns are ignored.
+      const siblingCols = rows[0]
+        .map((header, i) => (/^sibling/i.test(header || "") ? i : -1))
+        .filter((i) => i >= 0);
       return rows.map((row) => ({
         name: row[0] ? row[0] : null,
         oneAgo: row[1] ? row[1] : null,
         twoAgo: row[2] ? row[2] : null,
-        // Columns D onward are siblings; add a column for a bigger family.
-        siblings: row.slice(3).filter(Boolean),
+        siblings: siblingCols.map((i) => row[i]).filter(Boolean),
       }));
     }
   } catch (err) {
